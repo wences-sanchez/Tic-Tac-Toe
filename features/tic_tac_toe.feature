@@ -8,7 +8,7 @@ Feature: Show the game board to the user
     When a user begins the game
     Then the game board is shown as this example
       """
-      X O X
-      O O X
-      X X O
+      - - -
+      - - -
+      - - -
       """
