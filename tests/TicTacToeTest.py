@@ -7,10 +7,10 @@ class TicTacToeTest(unittest.TestCase):
     def test_table_is_shown(self):
         tic_tac_toe = TicTacToe()
 
-        expected_table = [['X', 'O', 'X'],
+        expected_board = [['X', 'O', 'X'],
                           ['O', 'O', 'X'],
                           ['X', 'X', 'O']]
-        self.assertListEqual(expected_table, tic_tac_toe.get_table())
+        self.assertListEqual(expected_board, tic_tac_toe.get_board())
 
 
 if __name__ == '__main__':
