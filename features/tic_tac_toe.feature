@@ -5,7 +5,6 @@ Feature: Show the game board to the user
 
   Scenario: Show the board of the game
     Given the game has just started
-    When a user begins the game
     Then the game board is shown as this example
       """
       - - -
