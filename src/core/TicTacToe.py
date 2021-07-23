@@ -4,9 +4,7 @@ class TicTacToe:
     BOARD_SIZE = 3
 
     def __init__(self):
-        self.board = [['X', 'O', 'X'],
-                      ['O', 'O', 'X'],
-                      ['X', 'X', 'O']]
+        self.board = [['-' * TicTacToe.BOARD_SIZE] * TicTacToe.BOARD_SIZE]
 
     def get_board(self):
         return self.board
