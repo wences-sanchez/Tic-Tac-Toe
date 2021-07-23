@@ -7,9 +7,8 @@ class TicTacToeTest(unittest.TestCase):
     def test_table_is_shown(self):
         tic_tac_toe = TicTacToe()
 
-        expected_board = [['X', 'O', 'X'],
-                          ['O', 'O', 'X'],
-                          ['X', 'X', 'O']]
+        expected_board = [['-' * 3] * 3]
+
         self.assertListEqual(expected_board, tic_tac_toe.get_board())
 
 
