@@ -5,11 +5,11 @@ Feature: Show the game board to the user
 
   Scenario Outline: Show the board of the game
     Given the game is started
-    When the user inputs <input>
-    Then the game board is shown like <output>
+    When the user inputs <user_input>
+    Then the game board is shown like <user_output>
 
     Examples: Game boards
-      | input     | output |
+      | user_input     | user_output |
       | O_OXXO_XX | ---------\n\| O _ O \|\n\| X X O \|\n\| _ X X \|\n---------\n |
       | OXO__X_OX | ---------\n\| O X O \|\n\| _ _ X \|\n\| _ O X \|\n---------\n |
       | _XO__X___ | ---------\n\| _ X O \|\n\| _ _ X \|\n\| _ _ _ \|\n---------\n |
