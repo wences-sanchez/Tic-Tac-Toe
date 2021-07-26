@@ -3,8 +3,15 @@
 class TicTacToe:
     BOARD_SIZE = 3
 
-    def __init__(self):
-        self.board = [['-' * TicTacToe.BOARD_SIZE] * TicTacToe.BOARD_SIZE]
+    def __init__(self, str_input):
+        if str_input:
+            self.board = [
+                list(str_input[:3]),
+                list(str_input[3:6]),
+                list(str_input[6:9])
+            ]
+        else:
+            self.board = [['_' * TicTacToe.BOARD_SIZE] * TicTacToe.BOARD_SIZE]
 
     def get_board(self):
         return self.board
@@ -19,5 +26,5 @@ class TicTacToe:
 
 
 if __name__ == '__main__':
-    tic_tac_toe = TicTacToe()
+    tic_tac_toe = TicTacToe('')
     print(tic_tac_toe)
