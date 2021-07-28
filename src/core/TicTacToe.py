@@ -17,11 +17,13 @@ class TicTacToe:
         return self.board
 
     def __str__(self):
-        out = ''
+        out = '-' * 9 + '\n'
         for row in range(TicTacToe.BOARD_SIZE):
+            out += '| '
             for col in range(TicTacToe.BOARD_SIZE):
-                out += self.board[row][col] + ' ' if col < TicTacToe.BOARD_SIZE - 1 else self.board[row][col]
-            out += '\n' if row < TicTacToe.BOARD_SIZE - 1 else ''
+                out += self.board[row][col] + ' '
+            out += '|\n'
+        out += '-' * 9
         return out
 
 

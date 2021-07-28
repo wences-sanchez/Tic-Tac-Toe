@@ -11,7 +11,7 @@ class TicTacToeTest(unittest.TestCase):
 
         self.assertListEqual(expected_board, tic_tac_toe.get_board())
 
-    def test_specified_input(self):
+    def test_given_specified_input_then_build_board(self):
         tic_tac_toe = TicTacToe('XXXXXXXXX')
 
         expected_board = [list('XXX')] * 3
