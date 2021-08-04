@@ -13,15 +13,15 @@ class TicTacToe:
 
     def get_status(self):
         if self.has_won('X'):
-            print('X wins')
-        elif self.has_won('Y'):
-            print('Y wins')
+            return 'X wins'
+        elif self.has_won('O'):
+            return 'O wins'
         elif self.is_draw():
-            print('Draw')
+            return 'Draw'
         elif self.is_impossible():
-            print('Impossible')
+            return 'Impossible'
         else:
-            print('Game not finished')
+            return 'Game not finished'
 
     def has_won(self, player):
         return self.is_player_in_whole_line(player)
@@ -109,5 +109,7 @@ class TicTacToe:
 
 
 if __name__ == '__main__':
-    tic_tac_toe = TicTacToe('')
+    user_input = input('Enter cells: ')
+    tic_tac_toe = TicTacToe(user_input)
     print(tic_tac_toe)
+    print(tic_tac_toe.get_status())
