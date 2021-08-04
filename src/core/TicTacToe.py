@@ -1,5 +1,3 @@
-
-
 class TicTacToe:
     BOARD_SIZE = 3
 
@@ -12,6 +10,89 @@ class TicTacToe:
             ]
         else:
             self.board = [['_' * TicTacToe.BOARD_SIZE] * TicTacToe.BOARD_SIZE]
+
+    def get_status(self):
+        if self.has_won('X'):
+            print('X wins')
+        elif self.has_won('Y'):
+            print('Y wins')
+        elif self.is_draw():
+            print('Draw')
+        elif self.is_impossible():
+            print('Impossible')
+        else:
+            print('Game not finished')
+
+    def has_won(self, player):
+        return self.is_player_in_whole_line(player)
+
+    def is_draw(self):
+        if not self.has_won('X') and not self.has_won('O'):
+            return not self._has_free_places()  # If doesn't have free places,
+            # then the game is draw
+
+    def is_impossible(self):
+        if self.has_won('X') and self.has_won('O'):
+            return True
+        if abs(self.count_('X') < self.count_('O')) >= 2:
+            return True
+        return False
+
+    def count_(self, player):
+        count_ = 0
+        for row in range(self.BOARD_SIZE):
+            for col in range(self.BOARD_SIZE):
+                if self.board[row][col] == player:
+                    count_ += 1
+        return count_
+
+    def _has_free_places(self):
+        for row in range(self.BOARD_SIZE):
+            for col in range(self.BOARD_SIZE):
+                if self.board[row][col] == '_':
+                    return True
+        return False
+
+    def is_player_in_whole_line(self, player):
+        # 1. Compare rows
+        for row in range(self.BOARD_SIZE):
+            if self.check_if_player_is_in_whole_row(row, player):
+                return True
+
+        # 2. Compare columns
+        for col in range(self.BOARD_SIZE):
+            if self.check_if_player_is_in_whole_column(col, player):
+                return True
+
+        # 3. Compare diagonals
+        if self.check_if_player_is_in_whole_main_diag(player) or \
+                self.check_if_player_is_in_whole_second_diag(player):
+            return True
+        return False
+
+    def check_if_player_is_in_whole_row(self, row, player):
+        for col in range(self.BOARD_SIZE):
+            if self.board[row][col] != player:
+                return False
+        return True
+
+    def check_if_player_is_in_whole_column(self, col, player):
+        for row in range(self.BOARD_SIZE):
+            if self.board[row][col] != player:
+                return False
+        return True
+
+    def check_if_player_is_in_whole_main_diag(self, player):
+        for i in range(self.BOARD_SIZE):
+            if self.board[i][i] != player:
+                return False
+        return True
+
+    def check_if_player_is_in_whole_second_diag(self, player):
+        for i in range(self.BOARD_SIZE):
+            if self.board[i][self.BOARD_SIZE - i - 1] != player:
+                return False
+        return True
 
     def get_board(self):
         return self.board
