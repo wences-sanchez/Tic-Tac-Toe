@@ -12,14 +12,14 @@ class TicTacToe:
             self.board = [['_' * TicTacToe.BOARD_SIZE] * TicTacToe.BOARD_SIZE]
 
     def get_status(self):
-        if self.has_won('X'):
+        if self.is_impossible():
+            return 'Impossible'
+        elif self.has_won('X'):
             return 'X wins'
         elif self.has_won('O'):
             return 'O wins'
         elif self.is_draw():
             return 'Draw'
-        elif self.is_impossible():
-            return 'Impossible'
         else:
             return 'Game not finished'
 
@@ -34,7 +34,7 @@ class TicTacToe:
     def is_impossible(self):
         if self.has_won('X') and self.has_won('O'):
             return True
-        if abs(self.count_('X') < self.count_('O')) >= 2:
+        if abs(self.count_('X') - self.count_('O')) >= 2:
             return True
         return False
 
