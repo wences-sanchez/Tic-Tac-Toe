@@ -27,28 +27,45 @@ class TicTacToeTest(unittest.TestCase):
         self.assertListEqual(expected_board, tic_tac_toe.get_board())
 
     @parameterized.expand([
-        ('XXXO_O__O', 'X', True),
-        ('O_O__OXXX', 'X', True),
-        ('XOX_O__OX', 'O', True),
-        ('XOX_XO_OX', 'X', True),
-        ('_XO_OXO_X', 'O', True),
+        ('XXXO_O__O', 'X', True),  # Upper row
+        ('O__XXX_OO', 'X', True),  # Central row
+        ('O_O__OXXX', 'X', True),  # Bottom row
+        ('XO_XO_X_O', 'X', True),  # Left column
+        ('XOX_O__OX', 'O', True),  # Central column
+        ('X_O_XOX_O', 'O', True),  # Right column
+        ('XOX_XO_OX', 'X', True),  # Main diagonal
+        ('_XO_OXO_X', 'O', True),  # Second diagonal
         ('XXXO_O__O', 'O', False),
         ('O_O__OXXX', 'O', False),
         ('XOX_O__OX', 'X', False),
         ('XOX_XO_OX', 'O', False),
         ('_XO_OXO_X', 'X', False),
     ])
-    def test_player_won(self, board, player, expected):
+    def test_given_board_should_tell_if_player_won(self, board, player, expected):
         tic_tac_toe = TicTacToe(board)
         self.assertEqual(expected, tic_tac_toe.has_won(player))
 
-    def test_game_is_draw(self):
-        tic_tac_toe = TicTacToe('XXOOXXXOO')
-        self.assertTrue(tic_tac_toe.is_draw())
+    @parameterized.expand([
+        ('XXOOXXXOO', True),
+        ('OXOXXOXOX', True),
+        ('XOX_XO_OX', False),
+        ('_XO_OXO_X', False),
+        ('_OO_OXX_X', False),
+    ])
+    def test_given_board_should_return_whether_is_a_draw(self, board, expected):
+        tic_tac_toe = TicTacToe(board)
+        self.assertEqual(expected, tic_tac_toe.is_draw())
 
-    def test_game_is_impossible(self):
-        tic_tac_toe = TicTacToe('XXXOOOXOX')
-        self.assertTrue(tic_tac_toe.is_impossible())
+    @parameterized.expand([
+        ('XXXOOOXOX', True),  # Both player won (impossible)
+        ('XOOOOXXOO', True),  # Much more slots of one player (impossible)
+        ('OXOOXOXOX', False),  # A not impossible game board
+        ('_________', False),  # Another not impossible (empty) game board
+        ('XXXO_O__O', False),
+    ])
+    def test_given_board_should_return_whether_is_impossible(self, board, expected):
+        tic_tac_toe = TicTacToe(board)
+        self.assertEqual(expected, tic_tac_toe.is_impossible())
 
 
 if __name__ == '__main__':
