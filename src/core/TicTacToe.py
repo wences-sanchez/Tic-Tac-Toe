@@ -28,8 +28,12 @@ class TicTacToe:
 
     def is_draw(self):
         if not self.has_won('X') and not self.has_won('O'):
-            return not self._has_free_places()  # If doesn't have free places,
+            # If it doesn't have free places,
             # then the game is draw
+            return not self._has_free_places()
+        else:
+            # If any player won, then there is never a draw
+            return False
 
     def is_impossible(self):
         if self.has_won('X') and self.has_won('O'):
