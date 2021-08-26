@@ -11,7 +11,7 @@ class TicTacToeTest(unittest.TestCase):
     def test_given_empty_build_default_board(self):
         tic_tac_toe = TicTacToe('')
 
-        expected_board = [list('___')] * 3
+        expected_board = [['_', '_', '_'], ['_', '_', '_'], ['_', '_', '_']]
 
         self.assertListEqual(expected_board, tic_tac_toe.get_board())
 
@@ -121,6 +121,19 @@ class TicTacToeTest(unittest.TestCase):
 
         tic_tac_toe.set_value_in_cell(1, 2, 'O')
         self.assertEqual('O', tic_tac_toe.get_board_cell(1, 2))
+
+    def test_final_message(self):
+        tic_tac_toe = TicTacToe('XOO_XO__X')
+        self.assertEqual('X wins', tic_tac_toe.get_status())
+
+        tic_tac_toe = TicTacToe('XOXXO__OX')
+        self.assertEqual('O wins', tic_tac_toe.get_status())
+
+        tic_tac_toe = TicTacToe('XOXOXXOXO')
+        self.assertEqual('Draw', tic_tac_toe.get_status())
+
+        tic_tac_toe = TicTacToe('XOOOXOOXO')
+        self.assertEqual('Impossible', tic_tac_toe.get_status())
 
 
 if __name__ == '__main__':
