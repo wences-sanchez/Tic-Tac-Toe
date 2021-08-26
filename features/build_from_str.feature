@@ -4,7 +4,7 @@
 # of the game boards didn't fit in one line and didn't recognize
 # properly the '\n' characters.
 
-Feature: Show the game board to the user
+Feature: Show the game board from an input correctly to the user
   First step towards getting the full-game experience.
   The features will be incremental.
 
