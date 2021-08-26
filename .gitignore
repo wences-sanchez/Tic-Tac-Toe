@@ -1,3 +1,4 @@
 /.idea/
 /venv/
 /Tic-Tac-Toe.iml
+*__pycache__*
