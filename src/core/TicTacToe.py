@@ -1,3 +1,6 @@
+import re
+
+
 class TicTacToe:
     BOARD_SIZE = 3
 
@@ -9,7 +12,7 @@ class TicTacToe:
                 list(str_input[6:9])
             ]
         else:
-            self.board = [['_' * TicTacToe.BOARD_SIZE] * TicTacToe.BOARD_SIZE]
+            self.board = [list('_' * TicTacToe.BOARD_SIZE)] * TicTacToe.BOARD_SIZE
 
     def get_status(self):
         if self.is_impossible():
@@ -30,7 +33,7 @@ class TicTacToe:
         if not self.has_won('X') and not self.has_won('O'):
             # If it doesn't have free places,
             # then the game is draw
-            return not self._has_free_places()
+            return not self.has_free_places()
         else:
             # If any player won, then there is never a draw
             return False
@@ -50,7 +53,7 @@ class TicTacToe:
                     count_ += 1
         return count_
 
-    def _has_free_places(self):
+    def has_free_places(self):
         for row in range(self.BOARD_SIZE):
             for col in range(self.BOARD_SIZE):
                 if self.board[row][col] == '_':
@@ -98,8 +101,39 @@ class TicTacToe:
                 return False
         return True
 
+    def is_empty_cell(self, row, col):
+        return self.get_board_cell(row, col) == '_'
+
+    def set_value_in_cell(self, row, col, value):
+        if not re.match(r'^-*\d$', str(row)) or not re.match(r'^-*\d$', str(col)) or \
+                type(row) is not int or type(col) is not int:
+            raise ValueError
+
+        if row < 1 or row > 3 or col < 1 or col > 3:
+            # raise IndexError
+            pass
+        else:
+            self.board[row - 1][col - 1] = value
+
+    @staticmethod
+    def check_if_value_error(row, col):
+
+        print('You should enter numbers!')
+        raise ValueError
+
     def get_board(self):
         return self.board
+
+    def get_board_cell(self, row, col):
+        """
+        Returns a position in the board with natural indexes
+        :param row: An row input in [1,3]. Go transparent in low-level
+        :param col: An column input in [1,3]. Go transparent in low-level
+        :return: The position of the board with row and col specified
+        """
+        if row < 1 or row > 3 or col < 1 or col > 3:
+            raise IndexError
+        return self.board[row - 1][col - 1]
 
     def __str__(self):
         out = '-' * 9 + '\n'
@@ -111,9 +145,44 @@ class TicTacToe:
         out += '-' * 9
         return out
 
+    def __repr__(self):
+        out = ''
+        for row in range(TicTacToe.BOARD_SIZE):
+            for col in range(TicTacToe.BOARD_SIZE):
+                out += self.board[row][col]
+        return out
+
 
 if __name__ == '__main__':
+    # Output the game board based on the first line of input
     user_input = input('Enter cells: ')
     tic_tac_toe = TicTacToe(user_input)
     print(tic_tac_toe)
-    print(tic_tac_toe.get_status())
+    player = 'X'
+
+    # Ask user to enter a move
+    row, col = input('Enter the coordinates: ').split()
+    row, col = int(row), int(col)
+
+    while row > 3 or row < 1 or col > 3 or col < 1:
+        print('Coordinates should be from 1 to 3!')
+        row, col = input('Enter the coordinates: ').split()
+        row, col = int(row), int(col)
+
+    # Keep asking until '_'
+    while tic_tac_toe.get_board_cell(row, col) != '_' and \
+            (1 <= row <= 3 and 1 <= col <= 3):
+        print('This cell is occupied! Choose another one!')
+        row, col = input('Enter the coordinates: ').split()
+        row, col = int(row), int(col)
+
+        if row > 3 or row < 1 or col > 3 or col < 1:
+            print('Coordinates should be from 1 to 3!')
+        if type(row) is not int or type(col) is not int:
+            print('You should enter numbers!')
+
+    # Make the valid move
+    tic_tac_toe.set_value_in_cell(row, col, player)
+
+    # Print the changed board
+    print(tic_tac_toe)
