@@ -12,7 +12,7 @@ class TicTacToe:
                 list(str_input[6:9])
             ]
         else:
-            self.board = [list('_' * TicTacToe.BOARD_SIZE)] * TicTacToe.BOARD_SIZE
+            self.board = [['_', '_', '_'], ['_', '_', '_'], ['_', '_', '_']]
 
     def get_status(self):
         if self.is_impossible():
@@ -110,16 +110,9 @@ class TicTacToe:
             raise ValueError
 
         if row < 1 or row > 3 or col < 1 or col > 3:
-            # raise IndexError
-            pass
+            raise IndexError
         else:
             self.board[row - 1][col - 1] = value
-
-    @staticmethod
-    def check_if_value_error(row, col):
-
-        print('You should enter numbers!')
-        raise ValueError
 
     def get_board(self):
         return self.board
@@ -152,37 +145,44 @@ class TicTacToe:
                 out += self.board[row][col]
         return out
 
+    @staticmethod
+    def make_movement(row, col, player):
+        try:
+            row, col = int(row), int(col)
+            while row > 3 or row < 1 or col > 3 or col < 1:
+                print('Coordinates should be from 1 to 3!')
+                row, col = input('Enter the coordinates: ').split()
+                row, col = int(row), int(col)
+            # Keep asking until '_'
+            while tic_tac_toe.get_board_cell(row, col) != '_' and \
+                    (1 <= row <= 3 and 1 <= col <= 3):
+                print('This cell is occupied! Choose another one!')
+                row, col = input('Enter the coordinates: ').split()
+                row, col = int(row), int(col)
+
+                if row > 3 or row < 1 or col > 3 or col < 1:
+                    print('Coordinates should be from 1 to 3!')
+                if type(row) is not int or type(col) is not int:
+                    print('You should enter numbers!')
+        except IndexError:
+            print('Coordinates should be from 1 to 3!')
+        # Make the valid move
+        tic_tac_toe.set_value_in_cell(row, col, player)
+
 
 if __name__ == '__main__':
-    # Output the game board based on the first line of input
-    user_input = input('Enter cells: ')
-    tic_tac_toe = TicTacToe(user_input)
+    # Output the initial game board
+    tic_tac_toe = TicTacToe('')
     print(tic_tac_toe)
     player = 'X'
-
-    # Ask user to enter a move
-    row, col = input('Enter the coordinates: ').split()
-    row, col = int(row), int(col)
-
-    while row > 3 or row < 1 or col > 3 or col < 1:
-        print('Coordinates should be from 1 to 3!')
+    while (not tic_tac_toe.has_won('X') and not tic_tac_toe.has_won('O')) \
+            and not tic_tac_toe.is_draw():
+        # Ask user to enter a move
         row, col = input('Enter the coordinates: ').split()
-        row, col = int(row), int(col)
+        tic_tac_toe.make_movement(row, col, player)
+        # We show the board
+        print(tic_tac_toe)
+        # We toggle the player
+        player = 'O' if player == 'X' else 'X'
 
-    # Keep asking until '_'
-    while tic_tac_toe.get_board_cell(row, col) != '_' and \
-            (1 <= row <= 3 and 1 <= col <= 3):
-        print('This cell is occupied! Choose another one!')
-        row, col = input('Enter the coordinates: ').split()
-        row, col = int(row), int(col)
-
-        if row > 3 or row < 1 or col > 3 or col < 1:
-            print('Coordinates should be from 1 to 3!')
-        if type(row) is not int or type(col) is not int:
-            print('You should enter numbers!')
-
-    # Make the valid move
-    tic_tac_toe.set_value_in_cell(row, col, player)
-
-    # Print the changed board
-    print(tic_tac_toe)
+    print(tic_tac_toe.get_status())
